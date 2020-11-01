@@ -47,9 +47,7 @@ To be able to use the application directly, import the already created psql file
 * returns a success flag, list of categories, list of question objects and the total number of questions.
 * Questions are paginted in group of 10.
 * example: ```curl -X GET http://localhost:3000/questions\?page\=3``` <br />
- `` {"categories":{"1":"Science","2":"Art","3":"Geography","4":"History","5":"Entertainment","6":"Sports"},"questions":[{"answer":"scientists didn't figure out yet","category":2,"difficulty":5,"id":35,"question":"how to satisfy my mom"},{"answer":"blue whale","category":1,"difficulty":2,"id":37,"question":"what's the biggest animal?"},{"answer":"test answer","category":1,"difficulty":1,"id":39,"question":"test question"},{"answer":"test answer","category":1,"difficulty":1,"id":40,"question":"test question"},{"answer":"test answer","category":1,"difficulty":1,"id":42,"question":"test question"},{"answer":"test answer","category":1,"difficulty":1,"id":43,"question":"test question"},{"answer":"test answer","category":1,"difficulty":1,"id":44,"question":"test question"},{"answer":"test answer","category":1,"difficulty":1,"id":45,"question":"test question"},{"answer":"test answer","category":1,"difficulty":1,"id":46,"question":"test question"},{"answer":"test answer","category":1,"difficulty":1,"id":47,"question":"test question"}],"success":true,"totalQuestions":61} ``
-
-# POST
+ `` {"categories":{"1":"Science","2":"Art","3":"Geography","4":"History","5":"Entertainment","6":"Sports"},"questions":[{"answer":"blue whale","category":1,"difficulty":2,"id":37,"question":"what's the biggest animal?"}],"success":true,"totalQuestions":1} ``
 
 ### Errors
 #### 404: Not Found:
