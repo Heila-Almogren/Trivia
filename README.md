@@ -1,1 +1,6 @@
-This is the public repository for Udacity's Full-Stack Nanodegree program.
+# Introduction
+Trivia API provides you with quiz questions on different categories
+
+## Errors
+
+
