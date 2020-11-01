@@ -14,9 +14,9 @@ first of all, you have to install the required dependencies:
 2- run ``` pip install requirements.txt ```. 
 
 3- After that you'll be able to run the application:
-``` export FLASK_APP=flaskr ``` 
-``` FLASK_ENV=development ```
-``` FLASK_DEBUG=true ```
+``` export FLASK_APP=flaskr 
+FLASK_ENV=development 
+FLASK_DEBUG=true ```
 
 ### Frontend
 
