@@ -21,7 +21,7 @@ first of all, you have to install the required dependencies:
 ### Frontend
 After that navigate to front folder and run ```npm start```. after that the application will run on http://localhost:3000/.
 
-## Database preparation
+### Database preparation
 To be able to use the application directly, import the already created psql file by running ```psql trivia < trivia.psql```.
 
 ## API Reference
