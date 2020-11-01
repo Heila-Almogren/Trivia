@@ -47,9 +47,9 @@ def create_app(test_config=None):
                              'GET,PATCH,POST,DELETE,OPTIONS')
         return response
 
+    # Get categories
     @app.route('/categories', methods=['GET'])
     def categories():
-        
         """
         Returns:
             the list of all categories
@@ -62,34 +62,46 @@ def create_app(test_config=None):
         return jsonify({
             'success': True,
             'categories': formatted_categories,
-
         })
+
+    def paginate_questions(request, selection):
+        page = request.args.get('page', 1, type=int)
+        start = (page-1) * QUESTIONS_PER_PAGE
+        end = start + QUESTIONS_PER_PAGE
+        questions = Question.query.all()
+        formatted_questions = [question.format()
+                               for question in questions]
+
+        current_questions = formatted_questions[start:end]
+
+        return current_questions
+
+    # Get questions
 
     @app.route('/questions', methods=['GET'])
     def questions():
-        
         """
         Returns:
             the list of all questions
         """
 
-        page = request.args.get('page', 1, type=int)
-        start = (page-1) * 10
-        end = start + 10
-        questions = Question.query.all()
-        formatted_questions = [question.format()
-                               for question in questions]
+        selection = Question.query.all()
+        current_questions = paginate_questions(request, selection)
+
+        if len(current_questions) == 0:
+            abort(404)
+
         return jsonify({
             'success': True,
-            'questions': formatted_questions[start:end],
-            'totalQuestions': len(formatted_questions),
+            'questions': current_questions,
+            'totalQuestions': len(selection),
             'categories': {category.id: category.type
-                           for category in Category.query.all()}
+                           for category in Category.query.all()},
         })
 
+    # Delete question
     @app.route('/questions/<int:question_id>', methods=['DELETE'])
     def delete_question(question_id):
-        
         """
         Returns:
             the result of deleting a question
@@ -107,15 +119,17 @@ def create_app(test_config=None):
 
         except Exception as e:
             print(e)
-            error = True
             db.session.rollback()
+            return jsonify({
+                'success': False,
+            })
         finally:
             db.session.close()
-            return None
+
+    # Create question
 
     @app.route('/questions/create', methods=['POST'])
     def create_question():
-        
         """
         Returns:
             the result of creating a question
@@ -150,9 +164,9 @@ def create_app(test_config=None):
         finally:
             db.session.close()
 
+    # Search for question
     @app.route('/questions', methods=['POST'])
     def search_questions():
-        
         """
         Returns:
             the result of searching for a questions
@@ -175,9 +189,10 @@ def create_app(test_config=None):
                            for category in Category.query.all()}
         })
 
+    # Questions based on category
+
     @app.route('/categories/<category_id>/questions', methods=['GET'])
     def Questions_of_cat(category_id):
-        
         """
 
         Returns:
@@ -202,9 +217,10 @@ def create_app(test_config=None):
                            for category in Category.query.all()}
         })
 
+    # Quizz game
+
     @app.route('/quizzes', methods=['POST'])
     def createquiz():
-        
         """
 
         Returns:
@@ -242,9 +258,10 @@ def create_app(test_config=None):
             'question': {'id': currentQuestion.id, 'question': currentQuestion.question, 'answer': currentQuestion.answer, 'difficulty': currentQuestion.difficulty, 'category': currentQuestion.category},
         })
 
+    # Error handling
+
     @app.errorhandler(404)
     def not_found(error):
-        
         """
 
         returns:
@@ -260,7 +277,6 @@ def create_app(test_config=None):
 
     @app.errorhandler(422)
     def unprocessable(error):
-        
         """
 
         returns:
@@ -274,7 +290,82 @@ def create_app(test_config=None):
             "message": "unprocessable"
         }), 422
 
+    @app.errorhandler(400)
+    def Bad_request(error):
+        """
+
+        returns:
+            handling for 400 (Bad request) Error
+
+        """
+
+        return jsonify({
+            "success": False,
+            "error": 400,
+            "message": "Bad request"
+        }), 400
+
+    @app.errorhandler(405)
+    def method_not_allowed(error):
+        """
+
+        returns:
+            handling for 405 (method not allowed) Error
+
+        """
+
+        return jsonify({
+            "success": False,
+            "error": 405,
+            "message": "method not allowed"
+        }), 405
+
+    @app.errorhandler(500)
+    def Server_error(error):
+        """
+
+        returns:
+            handling for 500 (Server error) Error
+
+        """
+
+        return jsonify({
+            "success": False,
+            "error": 500,
+            "message": "Server error"
+        }), 500
+
+    @app.errorhandler(403)
+    def forbidden(error):
+        """
+
+        returns:
+            handling for 403 (forbidden) Error
+
+        """
+
+        return jsonify({
+            "success": False,
+            "error": 403,
+            "message": "forbidden"
+        }), 403
+
+    @app.errorhandler(409)
+    def Duplicate_resource(error):
+        """
+
+        returns:
+            handling for 409 (Duplicate resource) Error
+
+        """
+
+        return jsonify({
+            "success": False,
+            "error": 409,
+            "message": "Duplicate resource"
+        }), 409
+
     return app
 
 
-#hope #hardwork & always wide #smile :D
+# hope #hardwork & always wide #smile :D
