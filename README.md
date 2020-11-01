@@ -62,7 +62,7 @@ Means that the requested method is not allowed to processed to the specified res
 Means that the requested method could not be processed due to a server error problem.
 
 ## Tests
-You can run test bt running the unit test file using ```Python3 test_flaskr.py```.
+You can run test the application by running the unit test file using ```Python3 test_flaskr.py```.
 
 
 
