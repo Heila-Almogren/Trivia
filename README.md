@@ -27,13 +27,27 @@ To be able to use the application directly, import the already created psql file
 ## API Reference
 
 ### GET /categories
-returns a success flag, list of categories objects and the total number of categories. example:
+* returns a success flag, list of category objects and the total number of categories.
 * example: ```curl -X GET http://localhost:3000/categories``` <br />
  `` {"categories":{"1":"Science","2":"Art","3":"Geography","4":"History","5":"Entertainment","6":"Sports"},"success":true,"total_categories":6} ``
 
+### POST /questions/create
+* adds a new question to the database.
+* example ```curl -X POST -d '{"question": "testquestion", "answer": "testanswer", "difficulty": 1, "category": 1} ' -H  'Content-Type: application/json' http://localhost:3000/questions/create``` will return ```{"success":true}```
 
+### POST /questions/
+* returns search result for a question based on search term, total number of results and the list of categories.
+* example ```curl -X POST -d '{"searchTerm": "1990" }' -H  'Content-Type: application/json' http://localhost:3000/questions``` will return ```{"categories":{"1":"Science","2":"Art","3":"Geography","4":"History","5":"Entertainment","6":"Sports"},"questions":[{"answer":"Edward Scissorhands","category":5,"difficulty":3,"id":6,"question":"What was the title of the 1990 fantasy directed by Tim Burton about a young man with multi-bladed appendages?"}],"success":true,"totalQuestions":1}```
+
+### DELETE /questions/{questionID}
+* resturn result of deleting a question.
+* example: ```curl -X DELETE http://127.0.0.1:5000/questions/41``` will return ```{"success":true}``` and calling the command again will result in ```{"success":false}``` because record is deleted.
 
 ### GET /questions
+* returns a success flag, list of categories, list of question objects and the total number of questions.
+* Questions are paginted in group of 10.
+* example: ```curl -X GET http://localhost:3000/questions\?page\=3``` <br />
+ `` {"categories":{"1":"Science","2":"Art","3":"Geography","4":"History","5":"Entertainment","6":"Sports"},"questions":[{"answer":"scientists didn't figure out yet","category":2,"difficulty":5,"id":35,"question":"how to satisfy my mom"},{"answer":"blue whale","category":1,"difficulty":2,"id":37,"question":"what's the biggest animal?"},{"answer":"test answer","category":1,"difficulty":1,"id":39,"question":"test question"},{"answer":"test answer","category":1,"difficulty":1,"id":40,"question":"test question"},{"answer":"test answer","category":1,"difficulty":1,"id":42,"question":"test question"},{"answer":"test answer","category":1,"difficulty":1,"id":43,"question":"test question"},{"answer":"test answer","category":1,"difficulty":1,"id":44,"question":"test question"},{"answer":"test answer","category":1,"difficulty":1,"id":45,"question":"test question"},{"answer":"test answer","category":1,"difficulty":1,"id":46,"question":"test question"},{"answer":"test answer","category":1,"difficulty":1,"id":47,"question":"test question"}],"success":true,"totalQuestions":61} ``
 
 # POST
 
