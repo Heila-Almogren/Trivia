@@ -61,6 +61,7 @@ def create_app(test_config=None):
 
         return jsonify({
             'success': True,
+            'total_categories': len(formatted_categories),
             'categories': formatted_categories,
         })
 
@@ -161,10 +162,14 @@ def create_app(test_config=None):
         except Exception as e:
             print(e)
             db.session.rollback()
+            return jsonify({
+                'success': False,
+            })
         finally:
             db.session.close()
 
     # Search for question
+
     @app.route('/questions', methods=['POST'])
     def search_questions():
         """
