@@ -29,7 +29,7 @@ To be able to use the application directly, import the already created psql file
 ### GET /categories
 returns a success flag, list of categories objects and the total number of categories. example:
 * example: ```curl -X GET http://localhost:3000/categories``` <br />
- ``` {"categories":{"1":"Science","2":"Art","3":"Geography","4":"History","5":"Entertainment","6":"Sports"},"success":true,"total_categories":6} ```
+ `` {"categories":{"1":"Science","2":"Art","3":"Geography","4":"History","5":"Entertainment","6":"Sports"},"success":true,"total_categories":6} ``
 
 
 
